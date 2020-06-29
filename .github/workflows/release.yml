@@ -23,6 +23,7 @@ jobs:
         with:
           script: |
             return $.fs.readFileSync("./version")
+
       - name: Create a gem version tag
         uses: actions/github-script@0.2.0
         with:
@@ -30,5 +31,4 @@ jobs:
           script: |
             const version = ${{ steps.gem_version.outputs.result }};
             const ref = "refs/tags/v" + version;
-            console.log(${{ steps.gem_version.outputs.result }})
             github.git.createRef({...context.repo, ref: ref, sha: "${{ github.sha }}"});
