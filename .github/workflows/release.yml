@@ -18,8 +18,8 @@ jobs:
           ruby-version: 2.6
 
       - name: Read the gem version
-      uses: actions/javascript-action@v1
-      id: gem_version
-      with:
-        script: |
-          return $.fs.readFileSync("./version")
+        uses: Strech/run-javascript-action@v0.3.0
+        id: gem_version
+        with:
+          script: |
+            return $.fs.readFileSync("./version")
