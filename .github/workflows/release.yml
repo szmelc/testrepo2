@@ -27,7 +27,7 @@ jobs:
       - name: Create a gem version tag
         uses: actions/github-script@0.2.0
         with:
-          github-token: ${{ 'dsadhsajdas' }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const version = ${{ steps.gem_version.outputs.result }};
             const ref = "refs/tags/v" + version;
