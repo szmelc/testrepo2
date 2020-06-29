@@ -24,12 +24,15 @@ jobs:
           script: |
             return $.fs.readFileSync("./version").toString()
 
-      - name: Create a gem version tag
-        uses: actions/github-script@0.2.0
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const version = ${{ steps.gem_version.outputs.result }};
-            const ref = "refs/tags/v" + version;
-            console.log(${{ steps.gem_version.outputs.result }})
-            github.git.createRef({...context.repo, ref: ref, sha: "${{ github.sha }}"});
+          tag_name: ${{ steps.gem_version.outputs.result }}
+          release_name: Release ${{ steps.gem_version.outputs.result }}
+          body: |
+            Automated Release by GitHub Action CI
+          draft: false
+          prerelease: true
